@@ -1,0 +1,15 @@
+EntityFrameworkCore 5.0.9
+EntityFrameworkCore.Design 5.0.9
+EntityFrameworkCore.SqlServer 5.0.9
+EntityFrameworkCore.Tools 5.0.9
+
+
+
+
+
+
+Projeye Conrete klasörü oluþturarar baþladýk. Bu klasörde Modellerimizi tanýmladýkç
+Modellerimiz Blog, Category(Kategori), About(Hakkýnda), Writer(Yazar), Comment(Yorumlar), Contact(iletiþim)
+sonra DataAccessLayer katmanýna EntityFrameworkCore 5.0.9, EntityFrameworkCore.Design 5.0.9, EntityFrameworkCore.SqlServer 5.0.9, 
+
+
