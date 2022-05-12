@@ -12,4 +12,27 @@ Projeye Conrete klasörü oluþturarar baþladýk. Bu klasörde Modellerimizi tanýmlad
 Modellerimiz Blog, Category(Kategori), About(Hakkýnda), Writer(Yazar), Comment(Yorumlar), Contact(iletiþim)
 sonra DataAccessLayer katmanýna EntityFrameworkCore 5.0.9, EntityFrameworkCore.Design 5.0.9, EntityFrameworkCore.SqlServer 5.0.9, 
 
+Modellerde oluþturulan sýnýflarýn yani tablolarýn. Tablolar arasý iliþkisi yapýldý.
+Migration yapýlarak veritabanýnda tablolar ve iliþkiler oluþturuldu.
+
+DataAccessLayer katmanýnda Concrete klasörü oluþturuldu. Bu klasörde Context classý oluþturduk. Bu classýn görevi ConnectionString yani veritabanýn yolu yazýldý.
+Sonra DbSet ile Entitylerin veritabanýnda hangi tablolara eþleþiceði belirlendi. Veritabanýnda tablolar sonuna s takýsý alarak oluþturulur.
+
+Generic repository yazýldý. GenericRepository Desing Patterndir. Bize saðladýgý en büyük avantaj kod tekrarýný engelliyor (Don't Repeat Yourself), 
+Hata çýktýðý zaman daha kolay bir þekilde bulmamýzý saðlýyor ve belleði daha az yormaktadýr.
+
+Projede kullanýlacak Crud iþlemleri için interfaceler ve somut sýnýflarý (classlar) yazýldý. Bu yazýlan somut sýnýflar Generic repository den implement edildi.
+
+Katmanlý mimari kullanma amacýmýz --> Kod tekrarýný azaltmak, projede hatalar çýktýðý zaman hatanýn hangi katmanda oldugunu anlayýp dahaaz veri tarayarak hatalarý bulmak.
+Sisteme yeni özellikler eklendi zaman daha kolay bir þekilde sisteme dahil etmek. 
+Katmanlarýn saðladýgý en büyük avanjalardan bir tanesi Business katmanýný deðiþtirmek istediðimiz zaman baþka bir projenin business katmanýný dll leri sayesinde 
+projeye dahil edip hata çýkmadan çalýþmasýný saðlamak(Tabiki solid prensiblerine uyarak). Katmanlar arasý geçiþte interfaceler kullanýlýr.
+Ve ve ve en önemlisi her katmanýn kendi görevi olmasý Entity katmaný modellerin oldugu katman oluþturulmasý özelliklerinin eklenmesi
+
+DataAccess katmaný veritabaný iþlemlerinin yapýlmasý Context iþlemleri, Migration iþlemleri ve veri tabanýndan verilerin ekleme,silmei güncelleme iþlemleri(CRUD)
+Business katmanýn görevi iþ kurallarýnýn oldugu yerdir. Validationlarýn yapýldýgý(Ürün ismini boþ geçemezsiniz, Ürünün fiyatý 1000tl den yukarda olmalýdýr vs.)
+Business katmanýnda loglama,casheleme, validation, transuction iþlemleri business katmanýnda yapýlýr(Genellikle).
+UI katmaný Bizim ekranda görüntü olarak iþlemler yaptýgýmýz. Projedekullanýlan modellerin (Category) listelenmesi, Eklenmesi vs. Arayüz kýsmýdýr.
+Projeyi dýþ dünyaya açar. Frontend iþlemleri burda yapýlýr(Html,css,js,bootstrap,ajax,jquery).Bu projenin kapaðý burasýdýr. Görünen yüzüdür :D
+
 
