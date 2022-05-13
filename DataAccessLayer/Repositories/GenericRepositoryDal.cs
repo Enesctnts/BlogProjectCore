@@ -3,12 +3,13 @@ using DataAccessLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class GenericRepositoryDal<T> : IGenericRepositoryDal<T> where T : class
+    public class GenericRepositoryDal<T> : IGenericRepositoryDal<T> where T : class,new()
     {
         public void Delete(T entity)
         {
@@ -18,13 +19,14 @@ namespace DataAccessLayer.Repositories
             context.SaveChanges();
         }
 
+        
         public T GetByID(int id)
         {
             using var context = new Context();
             return context.Set<T>().Find(id);
         }
 
-        public List<T> GetlistAll(T entity)
+        public List<T> GetlistAll()
         {
             using var context = new Context();
             return context.Set<T>().ToList();
