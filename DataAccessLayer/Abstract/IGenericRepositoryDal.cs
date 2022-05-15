@@ -14,6 +14,7 @@ namespace DataAccessLayer.Abstract
         void Update(T entity);
         List<T> GetlistAll();
         T GetByID(int id);
+        List<T> GetlistAll(Expression<Func<T,bool>> filter);
 
     }
 }
