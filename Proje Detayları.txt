@@ -35,4 +35,92 @@ Business katmanýnda loglama,casheleme, validation, transuction iþlemleri busines
 UI katmaný Bizim ekranda görüntü olarak iþlemler yaptýgýmýz. Projedekullanýlan modellerin (Category) listelenmesi, Eklenmesi vs. Arayüz kýsmýdýr.
 Projeyi dýþ dünyaya açar. Frontend iþlemleri burda yapýlýr(Html,css,js,bootstrap,ajax,jquery).Bu projenin kapaðý burasýdýr. Görünen yüzüdür :D
 
+Proje ile ilgili temalar css,htmll,js,bootstrapt ler wwwroot içinde tutulur.
+Proje açýlýrken HomeController kendisi geliyor.
+
+Tema projeye eklendikten sonra bize sabit bir sayfa yani layout lazým. UserLayout ekledik.Kullancagýmýz temayý buraya yapýþtýrdýk.
+
+ilk olarak main kýsmýna yani projemizin viewleri nerde çalýþsýn onu söylüyoruz. Main kýsmýnda çalýþsýn diyoruz.
+
+ <!--/main-->
+    @RenderBody()
+    <!--//main-->
+
+
+sonra 
+Projede her sayfada olan header kýsmý ekliyeceðimiz diger sayfalarda olmasýný istediðimiz için ve daha kolay iþlem yapabilmek için. yani kontrolü kolay olsun diye
+Header kýsmýný Shared klasörüne sað týk yapýp partial1 isimli partial oluþturup bunun içine kopyalýyoruz.
+@await Html.PartialAsync("Partial1") UserLayoutta kesilen kodlarý partial1 viewine aktarýyoruz.sonra yandaki kod ile kodlarýn kesildiði yer bu kodu yapýþtýrýyoruz.
+
+
+ayný iþlemi <!--footer--> kýsmý içindde yapýyoruz onuda bu þekilde çagýrýyoruz.  @await Html.PartialAsync("Partial3") 
+
+
+
+CategoryController eklendi. CategoryControllerdaki Index actionu tüm kategorileri getirme iþlemi yaptýk.
+
+BlogController oluþturuldu. BlogController Index actionunda GetBlogListWithCategory metoduyla kategoriye göre bloglarý listeledik.
+Index viewýnda kullanýlan temanýn section kýsmýný aldýk ve Düzenlemeler yaptýk. 
+Burada bloðun oluþturulma tarihini bu þekilde alýyoruz @(((DateTime)@item.BlogCreateDate).ToString("dd-MMM-yyyy")).
+
+Blogun contentini @item.BlogContent.Substring(0, item.BlogContent.Substring(0, 130).LastIndexOf(" ")) bu þekilde çagýrýyoruz.
+
+<!-- item.BlogContent.Substring(0, item.BlogContent.Substring(0,130).LastIndexOf(" "))  
+burda Substring yapmamýzýn sebebi yazýlan yazýlarýn belirli harften fazlasýný alma örnek olarak minimum 0 maksimum 100 harf olucak.
+100 harfe kadarýný alcak geri kalan iþlemide devamýný oku butonu yapýcaz ordan görebilecekler. Eger yazýlarda 100 harften az yazý var ise hata verir.  
+item.BlogContent.Substring(0,130).LastIndexOf(" ") bu kýsým ise içeriðimizin 130 harfine kadar al 
+ama 130 harf bir kelimenin ortasýna geliyosa o kelimeden sonraki boþluga kadar al diyoruz. Yani 130 kelimeden sonraki boþluga kadar al diyoruz.  -->
+
+sonra devamýný oku iþlemi yaptýk. /Blog/BlogReadAll/@item.BlogID/ bu þekilde.
+
+<!-- BlogId göndermemizin sebebi Devamýný okuya bastýgýnda hangi yazýdaki devamýný oku butonunu bastýgýný id ile o sayfaya göndericez. 
+O sayfada yazýnýn devamýný görebileceðiz-->
+
+Sonra BlogReadAll actionu oluþturduk. GetBlogById metodu çagýrdýk.
+
+GetBlogById view kýsmýný oluþturduk. Temadaki single.html içindeki kodlarý buraya yapýþtýrdýk.
+<div class="col-lg-8 left-blog-info-w3layouts-agileits text-left"> divinin altýnda foreach ile döndük.
+
+sonra <!--Yorumlarý listeleme iþlemleri--> yapan kýsmý yani 
+<div class="comment-top">
+    <h4>Yorumlar</h4>
+ile baþlayýn kýsmý kestik ve CommentController içinde CommentListByBlog adýnda partialView oluþturduk.
+CommentListByBlog view kýsmýna bu kestiðimiz kýsmý yapýþtýrdýk. Bunu yapmamýzýn sebebi yorumlarý listeleme iþlmelerini partialview tanýmlayarak.
+Daha kolay kontrol etmek için ve bu yorumlar her tarafta lazým olacagý için direk bu partiali her tarafta çagýrabiliriz.
+
+sonra 
+ayný iþlemi Yorumlarý eklee iþlemi yani PartialAddComment adýndan CommentControllerda partialView ekledik.
+<!--Yorum ekleme iþlemleri-->
+<div class="comment-top">
+    <h4>Yorum Yapýn</h4>
+    ile baþlaya yeri kestik ve bunu PartialAddComment.cshtml Viewde yapýþtýrdýk.Bunu yapmamýzýn sebebi yorum ekleme iþlmelerini partialview tanýmlayarak.
+Daha kolay kontrol etmek için ve bu yorumlar her tarafta lazým olacagý için direk bu partiali her tarafta çagýrabiliriz.
+
+ve hepsini yaptýktan sonra
+
+BlogReadAll.cshtml View kýsmýnda neyi kestiysek onun partialini ekledik. Yani 
+
+ <!-- CommentListByBlog iþlemini bu þekilde de çagýrabiliyoruz. Yorumlar partiali-->
+ @await Html.PartialAsync("~/Views/Comment/CommentListByBlog.cshtml")
+
+ CommentListByBlog içindeki kodlarý nerden kestiysek oraya bu kodu yazýyoruz.
+
+  <!--Yorum ekleme partiali-->
+                    @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
+
+                    ayný iþi burda da yapýyorz.
+
+
+CommentController da 
+
+yorum ekleme PartialAddComment
+
+//Bloglardaki yorum listesi CommentListByBlog actionlarý oluþturduk bunlarýn kodlarýnýn nerden geldiðini sonra 
+gelen kodlarýn gelen yerine hangi komutu yazdýgýmýzý yukarda anlattým. 
+
+
+
+
+
+
 
