@@ -14,6 +14,11 @@ namespace BusinessLayer.Abstract
         void BlogUpdate(Blog blog);
         Blog GetById(int id);
         List<Blog> GetAll();
+        
+        //Blog içinde include işlemi yaptık. Blogları çagırırken category adını çagırınca hata veriyor. Bu yüzden include işlemi yaptık. Bu metodda include işlemi yapılan metodu çagırcaz
+        List<Blog> GetBlogListWithCategory();
+
+
 
     }
 }
