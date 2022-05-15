@@ -11,7 +11,7 @@ namespace BusinessLayer.Concrete
 {
     public class BlogManager : IBlogService
     {
-        private readonly IBlogDal _blogDal;
+        IBlogDal _blogDal;
 
         public BlogManager(IBlogDal blogDal)
         {
@@ -38,9 +38,18 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetlistAll();
         }
 
+        public List<Blog> GetBlogListWithCategory()
+        {
+            return _blogDal.GetListWithCategory();
+        }
+
         public Blog GetById(int id)
         {
             return _blogDal.GetByID(id);
+        }
+        public List<Blog> GetBlogById(int id)
+        {
+            return _blogDal.GetlistAll(x=>x.BlogID==id);
         }
     }
 }
