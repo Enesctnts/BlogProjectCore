@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,36 @@ namespace BusinessLayer.Concrete
 {
     public class WriterManager : IWriterService
     {
+        IWriterDal _writerDal;
+
+        public WriterManager(IWriterDal writerDal)
+        {
+            _writerDal = writerDal;
+        }
+
         public List<Writer> GetAll()
         {
-            throw new NotImplementedException();
+            return _writerDal.GetlistAll();
         }
 
         public Writer GetById(int id)
         {
-            throw new NotImplementedException();
+            return _writerDal.GetByID(id);
         }
 
         public void WriterAdd(Writer writer)
         {
-            throw new NotImplementedException();
+            _writerDal.Insert(writer);
         }
 
         public void WriterDelete(Writer writer)
         {
-            throw new NotImplementedException();
+            _writerDal.Delete(writer);
         }
 
         public void WriterUpdate(Writer writer)
         {
-            throw new NotImplementedException();
+            _writerDal.Update(writer);
         }
     }
 }
